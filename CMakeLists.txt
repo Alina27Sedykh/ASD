@@ -15,6 +15,7 @@ include(cmake/function.cmake)         # подхватываем функции,
 
 add_subdirectory(lib_easy_example)    # подключаем дополнительный 
 add_subdirectory(lib_stack)
+add_subdirectory(lib_alg)
 
 add_subdirectory(main)                # подключаем дополнительный CMakeLists.txt из подкаталога с именем main
 
