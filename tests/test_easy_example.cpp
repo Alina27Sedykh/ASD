@@ -40,7 +40,8 @@ TEST(TestEasyExampleLib, can_div_correctly_with_remainder) {
     EXPECT_NEAR(expected_result, actual_result, EPSILON);
 }
 
-TEST(TestEasyExampleLib, throw_when_try_div_by_zero) {
+TEST(TestEasyExampleLib, throw_when_try_div_by_zero) 
+{
   // Arrange
   int x = 10;
   int y = 0;
