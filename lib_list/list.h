@@ -60,7 +60,88 @@ public:
     int size() const { return _count; }
     T& front() { return _head->value; }
     T& back() { return _tail->value; }
+
+    class Iterator
+    {
+        Node<T>* current;
+    public:
+        Iterator(Node<T>* pos = nullptr) : current(pos) {}
+
+        Iterator(const Iterator& other) : current(other.current) {}
+
+        Iterator& operator=(const Iterator& other);
+        T& operator*();
+        const T& operator*() const;
+
+        bool operator==(const Iterator& other) const;
+        bool operator!=(const Iterator& other) const;
+        Iterator operator++(int);
+        Iterator& operator++();
+    };
+    Iterator begin() { return Iterator(); }
+    Iterator end() { return Iterator(nullptr); }
 };
+
+template <class T>
+typename List<T>::Iterator& List<T>::Iterator::operator=(const Iterator& other)
+{
+    if (this != &other)
+    { 
+        current = other.current;
+    }
+    return *this;
+}
+
+template <class T>
+T& List<T>::Iterator::operator*() 
+{
+    if (current == nullptr) 
+    {
+        throw std::out_of_range("Dereferencing null iterator");
+    }
+    return current->value;
+}
+
+template <class T>
+const T& List<T>::Iterator::operator*() const 
+{
+    if (current == nullptr) 
+    {
+        throw std::out_of_range("Dereferencing null iterator");
+    }
+    return current->value;
+}
+
+template <class T>
+bool List<T>::Iterator::operator==(const Iterator& other) const
+{
+    return current == other.current;
+}
+
+template <class T>
+bool List<T>::Iterator::operator!=(const Iterator& other) const 
+{
+    return !(*this == other); 
+}
+
+template <class T>
+typename List<T>::Iterator& List<T>::Iterator::operator++() 
+{
+    if (current == nullptr) 
+    {
+        throw std::out_of_range("Incrementing null iterator");
+    }
+    current = current->next;
+    return *this;
+}
+
+template <class T>
+typename List<T>::Iterator List<T>::Iterator::operator++(int) 
+{ 
+    Iterator temp = *this; 
+    ++(*this);             
+    return temp;          
+}
 
 template <class T>
 bool List<T>::is_empty() const
@@ -267,3 +348,19 @@ void List<T>::clear()
         pop_front();
     }
 }
+//class Iterator
+//{
+//    Node<T>* current;
+//public:
+//    Iterator() : current(_head);
+//    Iterator(Node<T>* pos) : current(pos) {};
+//    Iterator(const Iterator& other) : current(other.current) {}
+//    Iterator& operator=(const Iterator& other);
+//    T& operator*();
+//
+//    bool operator!=(const Iterator& other);
+//    Iterator operator++(int);
+//    Iterator& operator++();
+//};
+//Iterator begin() { return Iterator(); }
+//Iterator end() { return Iterator(nullptr) };

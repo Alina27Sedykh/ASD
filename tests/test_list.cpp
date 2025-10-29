@@ -1,6 +1,55 @@
 #include <gtest/gtest.h>
 #include "../lib_list/list.h"
 
+TEST(ListIterator, IterateAndRead)
+{
+    List<int> list;
+    for (int i = 1; i <= 10; ++i) 
+    {
+        list.push_back(i+1);
+    }
+
+    int expected_val = 1;
+  
+    for (List<int>::Iterator it = list.begin(); it != list.end(); ++it)
+    {
+        EXPECT_EQ(*it, expected_val);
+        expected_val++;
+    }
+   /* EXPECT_EQ(expected_val, 6); */
+}
+
+
+TEST(ListIterator, IterateAndModify)
+{
+    List<int> list;
+    for (int i = 1; i <= 5; ++i) 
+    {
+        list.push_back(i);
+    }
+
+    for (List<int>::Iterator it = list.begin(); it != list.end(); ++it)
+    {
+        *it = 0;
+    }
+
+    for (List<int>::Iterator it = list.begin(); it != list.end(); ++it)
+    {
+        EXPECT_EQ(*it, 0);
+    }
+}
+
+
+TEST(ListIterator, EmptyList) 
+{
+    List<int> list;
+    List<int>::Iterator it = list.begin();
+   
+    ASSERT_EQ(it, list.end());
+
+    EXPECT_THROW(*it, std::out_of_range); 
+}
+
 
 TEST(ListTest, DefaultConstructorCreatesEmptyList) 
 {
