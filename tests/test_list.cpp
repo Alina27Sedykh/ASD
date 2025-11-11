@@ -16,7 +16,6 @@ TEST(ListIterator, IterateAndRead)
         EXPECT_EQ(*it, expected_val);
         expected_val++;
     }
-   /* EXPECT_EQ(expected_val, 6); */
 }
 
 
