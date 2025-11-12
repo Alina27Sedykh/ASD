@@ -13,6 +13,7 @@ include(cmake/function.cmake)         # подхватываем функции,
                                       # для простоты мы объединили наборы команд для создания статической библиотеки
 								      # и для создания исполняемого проекта в отдельные функции
 
+add_subdirectory(lib_DSV)    
 add_subdirectory(lib_easy_example)    # подключаем дополнительный 
 add_subdirectory(lib_stack)
 add_subdirectory(lib_alg)
