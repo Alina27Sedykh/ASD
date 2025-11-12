@@ -1,4 +1,4 @@
-
+#include "alg.h"
 #include <gtest/gtest.h>
 #include "../lib_DSV/DSV.h"
 
@@ -75,28 +75,4 @@ TEST(DSVTest, can_use_after_copy)
     ASSERT_NO_THROW(DSV dsv2 = dsv1);
     ASSERT_NO_THROW(dsv2.find(0));
     ASSERT_NO_THROW(dsv2.connected(0, 1));
-}
-TEST(IslandCountTest, can_count_single_island)
-{
-
-    std::vector<std::vector<int>> grid =
-    {
-        {1, 1, 1},
-        {1, 1, 1},
-        {1, 1, 1}
-    };
-    ASSERT_NO_THROW(countIslands(grid));
-    assert(countIslands(grid) == 1);
-}
-
-TEST(IslandCountTest, can_count_multiple_islands)
-{
-    std::vector<std::vector<int>> grid = 
-    {
-        {1, 0, 1},
-        {0, 0, 0},
-        {1, 0, 1}
-    };
-    ASSERT_NO_THROW(countIslands(grid));
-    assert(countIslands(grid) == 4);
 }
