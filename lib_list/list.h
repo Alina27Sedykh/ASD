@@ -348,19 +348,3 @@ void List<T>::clear()
         pop_front();
     }
 }
-//class Iterator
-//{
-//    Node<T>* current;
-//public:
-//    Iterator() : current(_head);
-//    Iterator(Node<T>* pos) : current(pos) {};
-//    Iterator(const Iterator& other) : current(other.current) {}
-//    Iterator& operator=(const Iterator& other);
-//    T& operator*();
-//
-//    bool operator!=(const Iterator& other);
-//    Iterator operator++(int);
-//    Iterator& operator++();
-//};
-//Iterator begin() { return Iterator(); }
-//Iterator end() { return Iterator(nullptr) };
