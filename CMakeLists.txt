@@ -19,7 +19,6 @@ add_subdirectory(lib_easy_example)    # подключаем дополните�
 add_subdirectory(lib_stack)
 add_subdirectory(lib_alg)
 
-=======
 add_subdirectory(lib_easy_example) 
 add_subdirectory(lib_queue) 
 add_subdirectory(lib_list)
