@@ -1,42 +1,47 @@
 #include <gtest/gtest.h>
 #include "../lib_list2/list2.h"
 
-// Тест 1: Итерирование пустого списка
-TEST(ListIterator, IterateEmptyList)
+TEST(List2Iterator, IterateAndRead)
 {
     List<int> list;
-
-    EXPECT_EQ(list.begin(), list.end());
-
-    int count = 0;
-    for (auto it = list.begin(); it != list.end(); ++it) {
-        count++;
+    for (int i = 1; i <= 10; ++i)
+    {
+        list.push_back(i);
     }
-    EXPECT_EQ(count, 0);
+
+    int expected_val = 1;
+
+    for (List<int>::Iterator it = list.begin(); it != list.end(); ++it)
+    {
+        EXPECT_EQ(*it, expected_val);
+        expected_val++;
+    }
 }
 
-// Тест 2: Базовый итератор на чтение
-TEST(ListIterator, BasicIterateAndRead)
+TEST(List2Iterator, IterateAndModify)
 {
     List<int> list;
-    list.push_back(1);
+    for (int i = 1; i <= 5; ++i)
+    {
+        list.push_back(i);
+    }
 
-    List<int>::Iterator it = list.begin();
-    EXPECT_NE(it, list.end());
-    EXPECT_EQ(*it, 1);
+    for (List<int>::Iterator it = list.begin(); it != list.end(); ++it)
+    {
+        *it = (*it) * 10;
+    }
 
-    ++it;
-    EXPECT_EQ(it, list.end());
+    for (List<int>::Iterator it = list.begin(); it != list.end(); ++it)
+    {
+        EXPECT_GE(*it, 10);
+    }
 }
 
-// Тест 3: Базовый итератор на запись
-TEST(ListIterator, BasicIterateAndModify)
+TEST(List2Iterator, EmptyList)
 {
     List<int> list;
-    list.push_back(5);
-
     List<int>::Iterator it = list.begin();
-    *it = 10;
 
-    EXPECT_EQ(*list.begin(), 10);
+    ASSERT_EQ(it, list.end());
+    EXPECT_THROW(*it, std::out_of_range);
 }
