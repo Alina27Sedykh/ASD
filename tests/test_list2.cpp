@@ -39,4 +39,8 @@ TEST(ListIterator, BasicIterateAndModify)
     *it = 10;
 
     EXPECT_EQ(*list.begin(), 10);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 5707f097bb6fe3304c80400243e03fe20f11bb6a

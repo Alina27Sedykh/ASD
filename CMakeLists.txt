@@ -13,11 +13,20 @@ include(cmake/function.cmake)         # подхватываем функции,
                                       # для простоты мы объединили наборы команд для создания статической библиотеки
 								      # и для создания исполняемого проекта в отдельные функции
 
+<<<<<<< HEAD
 add_subdirectory(lib_DSV)    
 add_subdirectory(lib_easy_example)    # подключаем дополнительный 
 add_subdirectory(lib_stack)
 add_subdirectory(lib_alg)
 
+=======
+add_subdirectory(lib_easy_example) 
+add_subdirectory(lib_queue) 
+add_subdirectory(lib_list)
+add_subdirectory(lib_list2) 
+add_subdirectory(lib_stack_list) 
+add_subdirectory(lib_queue_list) 
+>>>>>>> 5707f097bb6fe3304c80400243e03fe20f11bb6a
 add_subdirectory(main)                # подключаем дополнительный CMakeLists.txt из подкаталога с именем main
 
 option(BTEST "build test?" ON)        # указываем подключаем ли google-тесты (ON или YES) или нет (OFF или NO)
