@@ -1,46 +1,51 @@
 #include <gtest/gtest.h>
 #include "../lib_list2/list2.h"
 
-// Тест 1: Итерирование пустого списка
-TEST(ListIterator, IterateEmptyList)
+
+TEST(List2Iterator, IterateEmpty)
 {
-    List<int> list;
+    DoubleLinkedList<int> list;
 
-    EXPECT_EQ(list.begin(), list.end());
+    int iterationCount = 0;
+    for (DoubleLinkedList<int>::Iterator it = list.begin(); it != list.end(); ++it)
+    {
+        iterationCount++;
+    }
+    EXPECT_EQ(iterationCount, 0);
+}
 
+TEST(List2Iterator, IterateAndRead)
+{
+    DoubleLinkedList<int> list;
+    for (int i = 1; i <= 5; ++i)
+    {
+        list.push_back(i * 10); 
+    }
+
+    int expected_val = 10;
     int count = 0;
-    for (auto it = list.begin(); it != list.end(); ++it) {
+
+    for (DoubleLinkedList<int>::Iterator it = list.begin(); it != list.end(); ++it)
+    {
+        EXPECT_EQ(*it, expected_val);
+        expected_val += 10;
         count++;
     }
-    EXPECT_EQ(count, 0);
+    EXPECT_EQ(count, 5);
 }
 
-// Тест 2: Базовый итератор на чтение
-TEST(ListIterator, BasicIterateAndRead)
+TEST(List2Iterator, IterateAndModify)
 {
-    List<int> list;
+    DoubleLinkedList<int> list;
     list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
 
-    List<int>::Iterator it = list.begin();
-    EXPECT_NE(it, list.end());
-    EXPECT_EQ(*it, 1);
 
+    DoubleLinkedList<int>::Iterator it = list.begin();
+    *it = 100;
     ++it;
-    EXPECT_EQ(it, list.end());
+    *it = 200;
+    ++it;
+    *it = 300;
 }
-
-// Тест 3: Базовый итератор на запись
-TEST(ListIterator, BasicIterateAndModify)
-{
-    List<int> list;
-    list.push_back(5);
-
-    List<int>::Iterator it = list.begin();
-    *it = 10;
-
-    EXPECT_EQ(*list.begin(), 10);
-<<<<<<< HEAD
-}
-=======
-}
->>>>>>> 5707f097bb6fe3304c80400243e03fe20f11bb6a
