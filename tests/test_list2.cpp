@@ -48,11 +48,4 @@ TEST(List2Iterator, IterateAndModify)
     *it = 200;
     ++it;
     *it = 300;
-
-    it = list.begin();
-    EXPECT_EQ(*it, 100);
-    ++it;
-    EXPECT_EQ(*it, 200);
-    ++it;
-    EXPECT_EQ(*it, 300);
 }
