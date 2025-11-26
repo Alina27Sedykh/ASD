@@ -17,14 +17,14 @@ include(cmake/function.cmake)         # подхватываем функции,
 add_subdirectory(lib_DSV)    
 add_subdirectory(lib_easy_example)    # подключаем дополнительный 
 add_subdirectory(lib_stack)
-add_subdirectory(lib_alg)
 
-add_subdirectory(lib_easy_example) 
 add_subdirectory(lib_queue) 
 add_subdirectory(lib_list)
 add_subdirectory(lib_list2) 
 add_subdirectory(lib_stack_list) 
 add_subdirectory(lib_queue_list) 
+add_subdirectory(lib_alg)
+
 
 add_subdirectory(main)                # подключаем дополнительный CMakeLists.txt из подкаталога с именем main
 

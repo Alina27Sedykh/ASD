@@ -12,16 +12,16 @@ struct Node
 };
 
 template <class T>
-class List2
+class DoubleLinkedList
 {
     Node<T>* _head;
     Node<T>* _tail;
     int _count;
 
 public:
-    List2() : _head(nullptr), _tail(nullptr), _count(0) {}
+    DoubleLinkedList() : _head(nullptr), _tail(nullptr), _count(0) {}
 
-    List2(const List2& other) : _head(nullptr), _tail(nullptr), _count(0)
+    DoubleLinkedList(const DoubleLinkedList& other) : _head(nullptr), _tail(nullptr), _count(0)
     {
         Node<T>* current = other._head;
         while (current != nullptr)
@@ -31,12 +31,12 @@ public:
         }
     }
 
-    ~List2()
+    ~DoubleLinkedList()
     {
         clear();
     }
 
-    List2& operator=(const List2& other)
+    DoubleLinkedList& operator=(const DoubleLinkedList& other)
     {
         if (this != &other)
         {
@@ -66,35 +66,35 @@ public:
     T& front() { return _head->value; }
     T& back() { return _tail->value; }
 
-    class Iterator2
+    class Iterator
     {
         Node<T>* current;
     public:
-        Iterator2(Node<T>* pos = nullptr) : current(pos) {}
-        Iterator2(const Iterator2& other) : current(other.current) {}
+        Iterator(Node<T>* pos = nullptr) : current(pos) {}
+        Iterator(const Iterator& other) : current(other.current) {}
 
-        Iterator2& operator=(const Iterator2& other);
+        Iterator& operator=(const Iterator& other);
         T& operator*();
         const T& operator*() const;
 
-        bool operator==(const Iterator2& other) const;
-        bool operator!=(const Iterator2& other) const;
-        Iterator2 operator++(int);
-        Iterator2& operator++();
-        Iterator2 operator--(int);
-        Iterator2& operator--();
-        Iterator2& operator-=(int n);
+        bool operator==(const Iterator& other) const;
+        bool operator!=(const Iterator& other) const;
+        Iterator operator++(int);
+        Iterator& operator++();
+        Iterator operator--(int);
+        Iterator& operator--();
+        Iterator& operator-=(int n);
     };
 
-    Iterator2 begin() { return Iterator2(_head); }
-    Iterator2 end() { return Iterator2(nullptr); }
-    Iterator2 rbegin() { return Iterator2(_tail); }
-    Iterator2 rend() { return Iterator2(nullptr); }
+    Iterator begin() { return Iterator(_head); }
+    Iterator end() { return Iterator(nullptr); }
+    Iterator rbegin() { return Iterator(_tail); }
+    Iterator rend() { return Iterator(nullptr); }
 };
 
 
 template <class T>
-typename List2<T>::Iterator2& List2<T>::Iterator2::operator=(const Iterator2& other)
+typename DoubleLinkedList<T>::Iterator& DoubleLinkedList<T>::Iterator::operator=(const Iterator& other)
 {
     if (this != &other)
     {
@@ -104,7 +104,7 @@ typename List2<T>::Iterator2& List2<T>::Iterator2::operator=(const Iterator2& ot
 }
 
 template <class T>
-T& List2<T>::Iterator2::operator*()
+T& DoubleLinkedList<T>::Iterator::operator*()
 {
     if (current == nullptr)
     {
@@ -114,7 +114,7 @@ T& List2<T>::Iterator2::operator*()
 }
 
 template <class T>
-const T& List2<T>::Iterator2::operator*() const
+const T& DoubleLinkedList<T>::Iterator::operator*() const
 {
     if (current == nullptr)
     {
@@ -124,19 +124,19 @@ const T& List2<T>::Iterator2::operator*() const
 }
 
 template <class T>
-bool List2<T>::Iterator2::operator==(const Iterator2& other) const
+bool DoubleLinkedList<T>::Iterator::operator==(const Iterator& other) const
 {
     return current == other.current;
 }
 
 template <class T>
-bool List2<T>::Iterator2::operator!=(const Iterator2& other) const
+bool DoubleLinkedList<T>::Iterator::operator!=(const Iterator& other) const
 {
     return !(*this == other);
 }
 
 template <class T>
-typename List2<T>::Iterator2& List2<T>::Iterator2::operator++()
+typename DoubleLinkedList<T>::Iterator& DoubleLinkedList<T>::Iterator::operator++()
 {
     if (current == nullptr)
     {
@@ -147,15 +147,15 @@ typename List2<T>::Iterator2& List2<T>::Iterator2::operator++()
 }
 
 template <class T>
-typename List2<T>::Iterator2 List2<T>::Iterator2::operator++(int)
+typename DoubleLinkedList<T>::Iterator DoubleLinkedList<T>::Iterator::operator++(int)
 {
-    Iterator2 temp = *this;
+    Iterator temp = *this;
     ++(*this);
     return temp;
 }
 
 template <class T>
-typename List2<T>::Iterator2& List2<T>::Iterator2::operator--()
+typename DoubleLinkedList<T>::Iterator& DoubleLinkedList<T>::Iterator::operator--()
 {
     if (current == nullptr)
     {
@@ -166,15 +166,15 @@ typename List2<T>::Iterator2& List2<T>::Iterator2::operator--()
 }
 
 template <class T>
-typename List2<T>::Iterator2 List2<T>::Iterator2::operator--(int)
+typename DoubleLinkedList<T>::Iterator DoubleLinkedList<T>::Iterator::operator--(int)
 {
-    Iterator2 temp = *this;
+    Iterator temp = *this;
     --(*this);
     return temp;
 }
 
 template <class T>
-typename List2<T>::Iterator2& List2<T>::Iterator2::operator-=(int n)
+typename DoubleLinkedList<T>::Iterator& DoubleLinkedList<T>::Iterator::operator-=(int n)
 {
     for (int i = 0; i < n && current != nullptr; ++i)
     {
@@ -185,13 +185,13 @@ typename List2<T>::Iterator2& List2<T>::Iterator2::operator-=(int n)
 
 // List2 implementation
 template <class T>
-bool List2<T>::is_empty() const
+bool DoubleLinkedList<T>::is_empty() const
 {
     return _head == nullptr;
 }
 
 template <class T>
-void List2<T>::push_front(const T& val) noexcept
+void DoubleLinkedList<T>::push_front(const T& val) noexcept
 {
     Node<T>* node = new Node<T>(val, nullptr, _head);
     if (is_empty())
@@ -207,7 +207,7 @@ void List2<T>::push_front(const T& val) noexcept
 }
 
 template <class T>
-void List2<T>::pop_front()
+void DoubleLinkedList<T>::pop_front()
 {
     if (is_empty())
     {
@@ -228,7 +228,7 @@ void List2<T>::pop_front()
 }
 
 template <class T>
-void List2<T>::push_back(const T& val) noexcept
+void DoubleLinkedList<T>::push_back(const T& val) noexcept
 {
     Node<T>* node = new Node<T>(val, _tail, nullptr);
     if (is_empty())
@@ -244,7 +244,7 @@ void List2<T>::push_back(const T& val) noexcept
 }
 
 template <class T>
-void List2<T>::pop_back()
+void DoubleLinkedList<T>::pop_back()
 {
     if (is_empty())
     {
@@ -265,7 +265,7 @@ void List2<T>::pop_back()
 }
 
 template <class T>
-void List2<T>::insert(Node<T>* node, const T& val)
+void DoubleLinkedList<T>::insert(Node<T>* node, const T& val)
 {
     if (node == nullptr)
     {
@@ -288,7 +288,7 @@ void List2<T>::insert(Node<T>* node, const T& val)
 }
 
 template <class T>
-void List2<T>::insert(int pos, const T& val)
+void DoubleLinkedList<T>::insert(int pos, const T& val)
 {
     if (pos < 0 || pos > _count)
     {
@@ -327,7 +327,7 @@ void List2<T>::insert(int pos, const T& val)
 }
 
 template <class T>
-void List2<T>::erase(Node<T>* node)
+void DoubleLinkedList<T>::erase(Node<T>* node)
 {
     if (node == nullptr || is_empty())
     {
@@ -357,7 +357,7 @@ void List2<T>::erase(Node<T>* node)
 }
 
 template <class T>
-void List2<T>::erase(int pos)
+void DoubleLinkedList<T>::erase(int pos)
 {
     if (pos < 0 || pos >= _count)
     {
@@ -396,7 +396,7 @@ void List2<T>::erase(int pos)
 }
 
 template <class T>
-Node<T>* List2<T>::find(const T& val)
+Node<T>* DoubleLinkedList<T>::find(const T& val)
 {
     Node<T>* current = _head;
     while (current != nullptr)
@@ -411,7 +411,7 @@ Node<T>* List2<T>::find(const T& val)
 }
 
 template <class T>
-void List2<T>::clear()
+void DoubleLinkedList<T>::clear()
 {
     while (!is_empty())
     {
