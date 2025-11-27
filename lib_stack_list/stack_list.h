@@ -1,6 +1,7 @@
 #pragma once
 #include <stdexcept>
 #include"list.h"
+
 template <class T>
 class MyStack
 {
