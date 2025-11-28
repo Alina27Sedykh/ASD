@@ -23,7 +23,21 @@ public:
         Node<T>* current = other._head;
         while (current != nullptr)
         {
-            push_back(current->value);
+            Node<T>* new_node = new Node<T>(current->value);
+
+            if (_tail == nullptr)  
+            {
+                _head = new_node;
+                _tail = new_node;
+            }
+            else  
+            {
+                _tail->next = new_node;
+                _tail = new_node;
+            }
+
+            _count++;
+           
             current = current->next;
         }
     }
@@ -35,15 +49,40 @@ public:
     {
         if (this != &other)
         {
-            clear();
-            Node<T>* current = other._head;
-            while (current != nullptr)
+            if (this != &other)
             {
-                push_back(current->value);
-                current = current->next;
+                Node<T>* current = _head;
+                while (current != nullptr)
+                {
+                    Node<T>* next = current->next;
+                    delete current;
+                    current = next;
+                }
+                _head = nullptr;
+                _tail = nullptr;
+                _count = 0;
+                Node<T>* current = other._head;
+                while (current_other != nullptr)
+                {
+                    Node<T>* new_node = new Node<T>(current_other->value);
+
+                    if (_tail == nullptr)
+                    {
+                        _head = new_node;
+                        _tail = new_node;
+                    }
+                    else
+                    {
+                        _tail->next = new_node;
+                        _tail = new_node;
+                    }
+
+                    _count++;
+                    current_other = current_other->next;
+                }
             }
+            return *this;
         }
-        return *this;
     }
 
     void push_front(const T& val) noexcept;
