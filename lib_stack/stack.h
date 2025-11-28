@@ -10,12 +10,15 @@ class Stak
 public:
 	Stak(int capacity);
 	Stak(const Stak& other);
+	Stak& operator=(const Stak& other);
 	~Stak();
 	
 	void push(const T& val);
 	void pop();
 	inline T top()const;
 	inline bool is_empty() const noexcept;
+	inline int count() const noexcept;
+	inline int capacity() const noexcept;
 	inline bool is_full() const noexcept;
 	void clear() noexcept;
 };
@@ -82,4 +85,31 @@ Stak<T>::Stak(const Stak& other) : _size(other._size), _top(other._top)
 	{
 		_data[i] = other._data[i];
 	}
+}
+template <class T>
+Stak<T>& Stak<T>::operator=(const Stak& other)
+{
+	if (this != &other)
+	{
+		delete[] _data;
+		_size = other._size;
+		_top = other._top;
+		_data = new T[_size];
+		for (int i = 0; i <= _top; ++i)
+		{
+			_data[i] = other._data[i];
+		}
+	}
+	return *this;
+}
+template <class T>
+inline int Stak<T>::count() const noexcept
+{
+	return _top + 1;
+}
+
+template <class T>
+inline int Stak<T>::capacity() const noexcept
+{
+	return _size;
 }
