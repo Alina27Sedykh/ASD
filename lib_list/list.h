@@ -23,7 +23,20 @@ public:
         Node<T>* current = other._head;
         while (current != nullptr)
         {
-            push_back(current->value);
+            Node<T>* new_node = new Node<T>(current->value);
+
+            if (_tail == nullptr) 
+            {
+                _head = new_node;
+                _tail = new_node;
+            }
+            else  
+            {
+                _tail->next = new_node;
+                _tail = new_node;
+            }
+
+            _count++;
             current = current->next;
         }
     }
@@ -39,13 +52,25 @@ public:
             Node<T>* current = other._head;
             while (current != nullptr)
             {
-                push_back(current->value);
+                Node<T>* new_node = new Node<T>(current->value);
+
+                if (_tail == nullptr)  
+                {
+                    _head = new_node;
+                    _tail = new_node;
+                }
+                else  
+                {
+                    _tail->next = new_node;
+                    _tail = new_node;
+                }
+
+                _count++;
                 current = current->next;
             }
         }
         return *this;
     }
-
     void push_front(const T& val) noexcept;
     void pop_front();
     void push_back(const T& val) noexcept;
@@ -348,3 +373,16 @@ void List<T>::clear()
         pop_front();
     }
 }
+//void clear()
+//{
+//    Node<T>* current = _head;
+//    while (current != nullptr)
+//    {
+//        Node<T>* next = current->next;
+//        delete current;
+//        current = next;
+//    }
+//    _head = nullptr;
+//    _tail = nullptr;
+//    _count = 0;
+//}

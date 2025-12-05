@@ -13,12 +13,15 @@ class Queue
 public:
     Queue(int capacity);
     Queue(const Queue& other);
+    Queue& operator=(const Queue& other);
     ~Queue();
 
     void push(const T& val);
     void pop();
     inline T front() const;
     inline T back() const;
+    inline int count() const noexcept;     
+    inline int capacity() const noexcept;
     inline bool is_empty() const noexcept;
     inline bool is_full() const noexcept;
     void clear() noexcept;
@@ -115,4 +118,43 @@ Queue<T>::Queue(const Queue& other) : _size(other._size), _front(other._front), 
             elements_copied++;
         }
     }
+}
+template <class T>
+Queue<T>& Queue<T>::operator=(const Queue& other)
+{
+    if (this != &other)
+    {
+        delete[] _data;
+
+        _size = other._size;
+        _front = other._front;
+        _rear = other._rear;
+        _count = other._count;
+
+        _data = new T[_size];
+
+        if (!other.is_empty())
+        {
+            int i = other._front;
+            int elements_copied = 0;
+            while (elements_copied < _count)
+            {
+                _data[i] = other._data[i];
+                i = (i + 1) % _size;
+                elements_copied++;
+            }
+        }
+    }
+    return *this;
+}
+template <class T>
+inline int Queue<T>::count() const noexcept
+{
+    return _count;
+}
+
+template <class T>
+inline int Queue<T>::capacity() const noexcept
+{
+    return _size;
 }
