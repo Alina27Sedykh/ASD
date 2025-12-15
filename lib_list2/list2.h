@@ -23,12 +23,25 @@ public:
 
     DoubleLinkedList(const DoubleLinkedList& other) : _head(nullptr), _tail(nullptr), _count(0)
     {
-        Node<T>* current = other._head;
-        while (current != nullptr)
+        if (other._head == nullptr)
         {
-            push_back(current->value);
-            current = current->next;
+            return;
         }
+        _head = new Node<T>(other._head->value);
+        _count++;
+        Node<T>* current_this = _head;
+        Node<T>* current_other = other._head->next;
+
+        while (current_other != nullptr)
+        {
+            Node<T>* new_node = new Node<T>(current_other->value, current_this, nullptr);
+            current_this->next = new_node;
+            current_this = new_node;
+            current_other = current_other->next;
+            _count++;
+        }
+
+        _tail = current_this;
     }
 
     ~DoubleLinkedList()
@@ -41,11 +54,25 @@ public:
         if (this != &other)
         {
             clear();
-            Node<T>* current = other._head;
-            while (current != nullptr)
+
+            if (other._head != nullptr)
             {
-                push_back(current->value);
-                current = current->next;
+                _head = new Node<T>(other._head->value);
+                _count++;
+
+                Node<T>* current_this = _head;
+                Node<T>* current_other = other._head->next;
+
+                while (current_other != nullptr)
+                {
+                    Node<T>* new_node = new Node<T>(current_other->value, current_this, nullptr);
+                    current_this->next = new_node;
+                    current_this = new_node;
+                    current_other = current_other->next;
+                    _count++;
+                }
+
+                _tail = current_this;
             }
         }
         return *this;

@@ -1,5 +1,6 @@
 #include "Alg.h"
 #include "DSV.h"
+#include "List.h"
 #include <stack>
 #include <unordered_map>
 

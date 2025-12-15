@@ -86,6 +86,12 @@ public:
     T& front() { return _head->value; }
     T& back() { return _tail->value; }
 
+    Node<T>* head() { return _head; }
+   /* const Node<T>* head() const { return _head; }*/
+
+    Node<T>* tail() { return _tail; }
+    /*const Node<T>* tail() const { return _tail; }*/
+
     class Iterator
     {
         Node<T>* current;
