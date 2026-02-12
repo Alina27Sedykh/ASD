@@ -69,7 +69,9 @@ int countIslands(const std::vector<std::vector<int>>& matrix)
             }
         }
     }
-    std::unordered_set<int> uniqueRoots;
+    //std::unordered_set<int> uniqueRoots;
+    int count = 0;
+
     for (int i = 0; i < N; i++)
     {
         for (int j = 0; j < N; j++)
@@ -78,10 +80,16 @@ int countIslands(const std::vector<std::vector<int>>& matrix)
             {
                 int index = i * N + j;
                 int root = dsv.find(index);
-                uniqueRoots.insert(root);
+                /*uniqueRoots.insert(root);*/
+                if (root == index)
+                {
+                    count++;
+
+
+                }
             }
         }
     }
 
-    return uniqueRoots.size();
+    return count;
 }
