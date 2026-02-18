@@ -23,7 +23,10 @@ add_subdirectory(lib_queue)
 add_subdirectory(lib_list)
 add_subdirectory(lib_list2) 
 add_subdirectory(lib_stack_list) 
-add_subdirectory(lib_queue_list) 
+add_subdirectory(lib_queue_list)
+add_subdirectory(lib_ITable)  
+add_subdirectory(lib_UnSortedTableOnVec)  
+add_subdirectory(lib_SortedTableOnVec)  
 
 add_subdirectory(main)                # подключаем дополнительный CMakeLists.txt из подкаталога с именем main
 

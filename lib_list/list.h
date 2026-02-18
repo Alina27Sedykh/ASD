@@ -49,40 +49,16 @@ public:
     {
         if (this != &other)
         {
-            if (this != &other)
+            clear();  
+
+            Node<T>* current = other._head;  
+            while (current != nullptr)
             {
-                Node<T>* current = _head;
-                while (current != nullptr)
-                {
-                    Node<T>* next = current->next;
-                    delete current;
-                    current = next;
-                }
-                _head = nullptr;
-                _tail = nullptr;
-                _count = 0;
-                Node<T>* current = other._head;
-                while (current_other != nullptr)
-                {
-                    Node<T>* new_node = new Node<T>(current_other->value);
-
-                    if (_tail == nullptr)
-                    {
-                        _head = new_node;
-                        _tail = new_node;
-                    }
-                    else
-                    {
-                        _tail->next = new_node;
-                        _tail = new_node;
-                    }
-
-                    _count++;
-                    current_other = current_other->next;
-                }
+                push_back(current->value);  
+                current = current->next;
             }
-            return *this;
         }
+        return *this;
     }
 
     void push_front(const T& val) noexcept;
@@ -117,7 +93,7 @@ public:
         Iterator operator++(int);
         Iterator& operator++();
     };
-    Iterator begin() { return Iterator(); }
+    Iterator begin() { return Iterator(_head); }
     Iterator end() { return Iterator(nullptr); }
 };
 
