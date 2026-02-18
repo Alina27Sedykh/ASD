@@ -1,48 +1,23 @@
 #include <gtest/gtest.h>
 #include "../lib_list/list.h"
 
-//TEST(ListIterator, IterateAndRead)
-//{
-//    List<int> list;
-//    for (int i = 1; i <= 10; ++i) 
-//    {
-//        list.push_back(i+1);
-//    }
-//
-//    int expected_val = 1;
-//  
-//    for (List<int>::Iterator it = list.begin(); it != list.end(); ++it)
-//    {
-//        EXPECT_EQ(*it, expected_val);
-//        expected_val++;
-//    }
-//}
 TEST(ListIterator, IterateAndRead)
 {
     List<int> list;
-
-    // Заполняем список числами от 1 до 10
     for (int i = 1; i <= 10; ++i)
     {
-        list.push_back(i);  // Исправлено: было i+1, стало i
+        list.push_back(i);  
     }
-
-    // Проверяем размер
     EXPECT_EQ(list.size(), 10);
-
-    // Проверяем первый и последний элементы
     EXPECT_EQ(list.front(), 1);
     EXPECT_EQ(list.back(), 10);
 
-    // Итерируемся и проверяем все значения
     int expected_val = 1;
     for (List<int>::Iterator it = list.begin(); it != list.end(); ++it)
     {
         EXPECT_EQ(*it, expected_val);
         expected_val++;
     }
-
-    // Проверяем, что прошли все 10 элементов
     EXPECT_EQ(expected_val, 11);
 }
 
