@@ -4,18 +4,21 @@
 TEST(ListIterator, IterateAndRead)
 {
     List<int> list;
-    for (int i = 1; i <= 10; ++i) 
+    for (int i = 1; i <= 10; ++i)
     {
-        list.push_back(i+1);
+        list.push_back(i);
     }
+    EXPECT_EQ(list.size(), 10);
+    EXPECT_EQ(list.front(), 1);
+    EXPECT_EQ(list.back(), 10);
 
     int expected_val = 1;
-  
     for (List<int>::Iterator it = list.begin(); it != list.end(); ++it)
     {
         EXPECT_EQ(*it, expected_val);
         expected_val++;
     }
+    EXPECT_EQ(expected_val, 11);
 }
 
 
