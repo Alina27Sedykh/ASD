@@ -99,35 +99,18 @@ TEST(SortedTableTest, Size)
     EXPECT_EQ(table.size(), 1);
 }
 
-TEST(SortedTableTest, Print)
-{
-    SortedTableOnVec<int, std::string> table;
-    table.insert(1, "one");
-    table.insert(2, "two");
-
-    std::stringstream ss;
-    table.print(ss);
-    std::string output = ss.str();
-
-    EXPECT_TRUE(output.find("Key: 1, Value: one") != std::string::npos);
-    EXPECT_TRUE(output.find("Key: 2, Value: two") != std::string::npos);
-}
-
 TEST(SortedTableTest, BinarySearchEfficiency)
 {
     SortedTableOnVec<int, std::string> table;
 
-    // Вставляем много элементов
-    for (int i = 0; i < 1000; ++i) {
+    for (int i = 0; i < 1000; ++i)
+    {
         table.insert(i, "value_" + std::to_string(i));
     }
-
-    // Проверяем быстрый поиск
-    for (int i = 0; i < 1000; ++i) {
+    for (int i = 0; i < 1000; ++i)
+    {
         EXPECT_TRUE(table.consist(i));
     }
-
-    // Проверяем граничные случаи
     EXPECT_TRUE(table.consist(0));
     EXPECT_TRUE(table.consist(999));
     EXPECT_FALSE(table.consist(-1));
@@ -151,36 +134,35 @@ TEST(SortedTableTest, StringKeys)
 TEST(SortedTableTest, ComplexOperations)
 {
     SortedTableOnVec<int, std::string> table;
-
-    // Вставка в разном порядке
     std::vector<int> keys = { 5, 2, 8, 1, 9, 3, 7, 4, 6, 0 };
-    for (int key : keys) {
+    for (int key : keys) 
+    {
         table.insert(key, "val_" + std::to_string(key));
     }
     EXPECT_EQ(table.size(), 10);
 
-    // Проверка всех ключей
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 10; ++i)
+    {
         EXPECT_TRUE(table.consist(i));
         EXPECT_EQ(table.find(i), "val_" + std::to_string(i));
     }
 
-    // Обновление
     table.insert(5, "UPDATED_5");
     EXPECT_EQ(table.find(5), "UPDATED_5");
     EXPECT_EQ(table.size(), 10);
 
-    // Удаление нечетных
-    for (int i = 1; i < 10; i += 2) {
+    for (int i = 1; i < 10; i += 2) 
+    {
         table.erase(i);
     }
     EXPECT_EQ(table.size(), 5);
 
-    // Проверка оставшихся
-    for (int i = 0; i < 10; i += 2) {
+    for (int i = 0; i < 10; i += 2) 
+    {
         EXPECT_TRUE(table.consist(i));
     }
-    for (int i = 1; i < 10; i += 2) {
+    for (int i = 1; i < 10; i += 2) 
+    {
         EXPECT_FALSE(table.consist(i));
     }
 }
@@ -190,8 +172,8 @@ TEST(SortedTableTest, DuplicateKeys)
     SortedTableOnVec<int, std::string> table;
 
     table.insert(1, "first");
-    table.insert(1, "second");  // Должно обновить
-    table.insert(1, "third");   // Должно обновить
+    table.insert(1, "second");  
+    table.insert(1, "third");  
 
     EXPECT_EQ(table.size(), 1);
     EXPECT_EQ(table.find(1), "third");

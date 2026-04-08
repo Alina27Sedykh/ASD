@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include <algorithm>
 #include <stdexcept>
 #include <iostream>
 #include "ITable.h"
@@ -24,7 +23,6 @@ public:
 template <typename TKey, typename TValue>
 void UnSortedTableOnVec<TKey, TValue>::insert(const TKey& Key, const TValue& Val) 
 {
-    // Проверяем, существует ли уже такой ключ
     auto it = _rows.end();
     for (size_t i = 0; i < _rows.size(); ++i) 
     {
@@ -37,12 +35,10 @@ void UnSortedTableOnVec<TKey, TValue>::insert(const TKey& Key, const TValue& Val
     
     if (it != _rows.end())
     {
-        // Если ключ существует, обновляем значение
         it->second = Val;
     } 
     else
     {
-        // Иначе добавляем новую пару
         _rows.push_back(std::make_pair(Key, Val));
     }
 }
@@ -69,7 +65,7 @@ void UnSortedTableOnVec<TKey, TValue>::erase(const TKey& Key)
         if (_rows[i].first == Key)
         {
             _rows.erase(_rows.begin() + i);
-            return;  // Выходим после удаления
+            return;  
         }
     }
 }

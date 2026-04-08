@@ -10,13 +10,11 @@ class SortedTableOnVec : public ITable<TKey, TValue>
 {
 private:
     std::vector<std::pair<TKey, TValue>> _rows;
-    // Вспомогательная функция для поиска позиции для вставки
     size_t find_insert_position(const TKey& Key) const;
 
 public:
     SortedTableOnVec() = default;
     ~SortedTableOnVec() override = default;
-
     void insert(const TKey& Key, const TValue& Val) override;
     TValue find(const TKey& Key) const override;
     void erase(const TKey& Key) override;
@@ -26,7 +24,6 @@ public:
     size_t size() const noexcept override;
 };
 
-// Реализация вспомогательной функции
 template <typename TKey, typename TValue>
 size_t SortedTableOnVec<TKey, TValue>::find_insert_position(const TKey& Key) const
 {
@@ -47,22 +44,16 @@ size_t SortedTableOnVec<TKey, TValue>::find_insert_position(const TKey& Key) con
     }
     return left;
 }
-
-// Реализация основных методов
 template <typename TKey, typename TValue>
 void SortedTableOnVec<TKey, TValue>::insert(const TKey& Key, const TValue& Val) 
 {
     size_t pos = find_insert_position(Key);
-
-    // Проверяем, существует ли уже такой ключ
     if (pos < _rows.size() && _rows[pos].first == Key)
     {
-        // Обновляем значение
         _rows[pos].second = Val;
     }
     else 
     {
-        // Вставляем с сохранением упорядоченности
         _rows.insert(_rows.begin() + pos, std::make_pair(Key, Val));
     }
 }
@@ -70,26 +61,13 @@ void SortedTableOnVec<TKey, TValue>::insert(const TKey& Key, const TValue& Val)
 template <typename TKey, typename TValue>
 TValue SortedTableOnVec<TKey, TValue>::find(const TKey& Key) const
 {
-    size_t left = 0;
-    size_t right = _rows.size();
-
-    while (left < right) 
+    size_t pos = find_insert_position(Key);
+    if (pos < _rows.size() && _rows[pos].first == Key)
     {
-        size_t mid = left + (right - left) / 2;
-        if (_rows[mid].first == Key) 
-        {
-            return _rows[mid].second;
-        }
-        else if (_rows[mid].first < Key)
-        {
-            left = mid + 1;
-        }
-        else 
-        {
-            right = mid;
-        }
+        return _rows[pos].second;
     }
-    throw std::runtime_error("Key not found");
+    else throw std::runtime_error("Key not found");
+   
 }
 
 template <typename TKey, typename TValue>

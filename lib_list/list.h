@@ -1,6 +1,10 @@
-#pragma once
-#include <stdexcept>
-
+﻿#pragma once
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
+#include <iomanip> 
+#include <sstream>
 template <class T>
 struct Node
 {
@@ -25,19 +29,19 @@ public:
         {
             Node<T>* new_node = new Node<T>(current->value);
 
-            if (_tail == nullptr)  
+            if (_tail == nullptr)
             {
                 _head = new_node;
                 _tail = new_node;
             }
-            else  
+            else
             {
                 _tail->next = new_node;
                 _tail = new_node;
             }
 
             _count++;
-           
+
             current = current->next;
         }
     }
@@ -49,12 +53,12 @@ public:
     {
         if (this != &other)
         {
-            clear();  
+            clear();
 
-            Node<T>* current = other._head;  
+            Node<T>* current = other._head;
             while (current != nullptr)
             {
-                push_back(current->value);  
+                push_back(current->value);
                 current = current->next;
             }
         }
@@ -73,9 +77,12 @@ public:
     Node<T>* find(const T& val);
     void clear();
     int size() const { return _count; }
-    T& front() { return _head->value; }
-    T& back() { return _tail->value; }
 
+    T& front() { return _head->value; }
+    const T& front() const { return _head->value; }
+
+    T& back() { return _tail->value; }
+    const T& back() const { return _tail->value; }
     class Iterator
     {
         Node<T>* current;
@@ -101,16 +108,16 @@ template <class T>
 typename List<T>::Iterator& List<T>::Iterator::operator=(const Iterator& other)
 {
     if (this != &other)
-    { 
+    {
         current = other.current;
     }
     return *this;
 }
 
 template <class T>
-T& List<T>::Iterator::operator*() 
+T& List<T>::Iterator::operator*()
 {
-    if (current == nullptr) 
+    if (current == nullptr)
     {
         throw std::out_of_range("Dereferencing null iterator");
     }
@@ -118,9 +125,9 @@ T& List<T>::Iterator::operator*()
 }
 
 template <class T>
-const T& List<T>::Iterator::operator*() const 
+const T& List<T>::Iterator::operator*() const
 {
-    if (current == nullptr) 
+    if (current == nullptr)
     {
         throw std::out_of_range("Dereferencing null iterator");
     }
@@ -134,15 +141,15 @@ bool List<T>::Iterator::operator==(const Iterator& other) const
 }
 
 template <class T>
-bool List<T>::Iterator::operator!=(const Iterator& other) const 
+bool List<T>::Iterator::operator!=(const Iterator& other) const
 {
-    return !(*this == other); 
+    return !(*this == other);
 }
 
 template <class T>
-typename List<T>::Iterator& List<T>::Iterator::operator++() 
+typename List<T>::Iterator& List<T>::Iterator::operator++()
 {
-    if (current == nullptr) 
+    if (current == nullptr)
     {
         throw std::out_of_range("Incrementing null iterator");
     }
@@ -151,11 +158,11 @@ typename List<T>::Iterator& List<T>::Iterator::operator++()
 }
 
 template <class T>
-typename List<T>::Iterator List<T>::Iterator::operator++(int) 
-{ 
-    Iterator temp = *this; 
-    ++(*this);             
-    return temp;          
+typename List<T>::Iterator List<T>::Iterator::operator++(int)
+{
+    Iterator temp = *this;
+    ++(*this);
+    return temp;
 }
 
 template <class T>

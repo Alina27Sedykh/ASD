@@ -122,9 +122,9 @@ Queue<T>::Queue(const Queue& other) : _size(other._size), _front(other._front), 
 template <class T>
 Queue<T>& Queue<T>::operator=(const Queue& other)
 {
-    if (this != &other)  
+    if (this != &other)
     {
-        delete[] _data;  
+        delete[] _data;
         _size = other._size;
         _front = other._front;
         _rear = other._rear;
