@@ -19,7 +19,7 @@ struct Node
 template<typename TKey, typename TValue>
 class Tree
 {
-private:
+protected:
     Node<TKey, TValue>* _root;
     int _size;
 

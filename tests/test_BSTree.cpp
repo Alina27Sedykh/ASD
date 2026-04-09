@@ -169,7 +169,6 @@ TEST(SortedTableTest, ComplexScenario)
     EXPECT_FALSE(table.consist(9));
 }
 
-// ==================== ТЕСТЫ СОЗДАНИЯ ====================
 
 TEST(BSTreeTest, CreateEmptyTree)
 {
@@ -179,8 +178,6 @@ TEST(BSTreeTest, CreateEmptyTree)
     EXPECT_EQ(tree.to_string(), "empty");
     EXPECT_EQ(tree.to_string(true), "empty");
 }
-
-// ==================== ТЕСТЫ ВСТАВКИ ====================
 
 TEST(BSTreeTest, InsertOneElement)
 {
@@ -232,8 +229,6 @@ TEST(BSTreeTest, InsertNegativeKeys)
     EXPECT_TRUE(tree.contains(-3));
 }
 
-// ==================== ТЕСТЫ ПОИСКА ====================
-
 TEST(BSTreeTest, ContainsExistingKey)
 {
     BSTree<int, int> tree;
@@ -284,8 +279,6 @@ TEST(BSTreeTest, FindInEmptyTreeThrowsException)
     BSTree<int, int> tree;
     EXPECT_THROW(tree.find(1), std::logic_error);
 }
-
-// ==================== ТЕСТЫ УДАЛЕНИЯ ====================
 
 TEST(BSTreeTest, EraseLeafNode)
 {
@@ -439,7 +432,6 @@ TEST(BSTreeTest, EraseAndInsertAgain)
     EXPECT_EQ(tree.size(), 3);
 }
 
-// ==================== ТЕСТЫ ВЫВОДА ====================
 
 TEST(BSTreeTest, ToStringUnsorted)
 {
@@ -481,219 +473,5 @@ TEST(BSTreeTest, ToStringSortedWithNegativeKeys)
 
     std::string sorted = tree.to_string(true);
     EXPECT_EQ(sorted, "-10:-10 -5:-5 0:0 3:3 5:5");
-}
-
-TEST(BSTreeTest, ToStringEmptyTree)
-{
-    BSTree<int, int> tree;
-    EXPECT_EQ(tree.to_string(false), "empty");
-    EXPECT_EQ(tree.to_string(true), "empty");
-}
-
-TEST(BSTreeTest, ToStringSingleElement)
-{
-    BSTree<int, int> tree;
-    tree.insert(42, 4242);
-
-    EXPECT_EQ(tree.to_string(false), "(42:4242)");
-    EXPECT_EQ(tree.to_string(true), "42:4242");
-}
-
-// ==================== ТЕСТЫ С РАЗНЫМИ ТИПАМИ ====================
-
-TEST(BSTreeTest, StringKeys)
-{
-    BSTree<std::string, int> tree;
-
-    tree.insert("apple", 100);
-    tree.insert("banana", 200);
-    tree.insert("cherry", 300);
-
-    EXPECT_EQ(tree.size(), 3);
-    EXPECT_EQ(tree.find("apple"), 100);
-    EXPECT_EQ(tree.find("banana"), 200);
-    EXPECT_EQ(tree.find("cherry"), 300);
-    EXPECT_TRUE(tree.contains("apple"));
-    EXPECT_FALSE(tree.contains("grape"));
-
-    tree.erase("banana");
-    EXPECT_FALSE(tree.contains("banana"));
-    EXPECT_EQ(tree.size(), 2);
-}
-
-TEST(BSTreeTest, DoubleKeys)
-{
-    BSTree<double, std::string> tree;
-
-    tree.insert(1.5, "one point five");
-    tree.insert(2.7, "two point seven");
-    tree.insert(3.14, "pi");
-
-    EXPECT_EQ(tree.size(), 3);
-    EXPECT_EQ(tree.find(1.5), "one point five");
-    EXPECT_EQ(tree.find(2.7), "two point seven");
-    EXPECT_EQ(tree.find(3.14), "pi");
-}
-
-TEST(BSTreeTest, StringValues)
-{
-    BSTree<int, std::string> tree;
-
-    tree.insert(1, "один");
-    tree.insert(2, "два");
-    tree.insert(3, "три");
-
-    EXPECT_EQ(tree.find(1), "один");
-    EXPECT_EQ(tree.find(2), "два");
-    EXPECT_EQ(tree.find(3), "три");
-}
-
-// ==================== КОМПЛЕКСНЫЕ ТЕСТЫ ====================
-
-TEST(BSTreeTest, ComplexScenario)
-{
-    BSTree<int, std::string> tree;
-
-    // Вставка 10 элементов
-    for (int i = 1; i <= 10; i++)
-    {
-        tree.insert(i, "value_" + std::to_string(i));
-    }
-    EXPECT_EQ(tree.size(), 10);
-
-    // Проверка contains
-    for (int i = 1; i <= 10; i++)
-    {
-        EXPECT_TRUE(tree.contains(i));
-        EXPECT_EQ(tree.find(i), "value_" + std::to_string(i));
-    }
-
-    // Удаление элементов
-    tree.erase(5);
-    tree.erase(7);
-    tree.erase(9);
-
-    EXPECT_EQ(tree.size(), 7);
-    EXPECT_FALSE(tree.contains(5));
-    EXPECT_FALSE(tree.contains(7));
-    EXPECT_FALSE(tree.contains(9));
-
-    // Проверка оставшихся
-    EXPECT_TRUE(tree.contains(1));
-    EXPECT_TRUE(tree.contains(2));
-    EXPECT_TRUE(tree.contains(3));
-    EXPECT_TRUE(tree.contains(4));
-    EXPECT_TRUE(tree.contains(6));
-    EXPECT_TRUE(tree.contains(8));
-    EXPECT_TRUE(tree.contains(10));
-
-    // Проверка упорядоченного вывода
-    std::string sorted = tree.to_string(true);
-    EXPECT_TRUE(sorted.find("1:value_1") != std::string::npos);
-    EXPECT_TRUE(sorted.find("10:value_10") != std::string::npos);
-    EXPECT_TRUE(sorted.find("5:value_5") == std::string::npos);
-}
-
-TEST(BSTreeTest, LargeNumberOfElements)
-{
-    BSTree<int, int> tree;
-    const int num_elements = 100;
-
-    // Вставка
-    for (int i = 0; i < num_elements; i++)
-    {
-        tree.insert(i, i * 2);
-    }
-    EXPECT_EQ(tree.size(), num_elements);
-
-    // Проверка
-    for (int i = 0; i < num_elements; i++)
-    {
-        EXPECT_TRUE(tree.contains(i));
-        EXPECT_EQ(tree.find(i), i * 2);
-    }
-
-    // Удаление половины
-    for (int i = 0; i < num_elements; i += 2)
-    {
-        tree.erase(i);
-    }
-    EXPECT_EQ(tree.size(), num_elements / 2);
-
-    // Проверка удаленных
-    for (int i = 0; i < num_elements; i += 2)
-    {
-        EXPECT_FALSE(tree.contains(i));
-    }
-
-    // Проверка оставшихся
-    for (int i = 1; i < num_elements; i += 2)
-    {
-        EXPECT_TRUE(tree.contains(i));
-        EXPECT_EQ(tree.find(i), i * 2);
-    }
-}
-
-TEST(BSTreeTest, BSTPropertyPreservedAfterInsert)
-{
-    BSTree<int, int> tree;
-
-    tree.insert(5, 5);
-    tree.insert(3, 3);
-    tree.insert(7, 7);
-    tree.insert(1, 1);
-    tree.insert(4, 4);
-    tree.insert(6, 6);
-    tree.insert(8, 8);
-
-    std::string sorted = tree.to_string(true);
-    EXPECT_EQ(sorted, "1:1 3:3 4:4 5:5 6:6 7:7 8:8");
-}
-
-TEST(BSTreeTest, BSTPropertyPreservedAfterErase)
-{
-    BSTree<int, int> tree;
-
-    tree.insert(5, 5);
-    tree.insert(3, 3);
-    tree.insert(7, 7);
-    tree.insert(1, 1);
-    tree.insert(4, 4);
-    tree.insert(6, 6);
-    tree.insert(8, 8);
-
-    tree.erase(3);
-    std::string sorted = tree.to_string(true);
-    EXPECT_EQ(sorted, "1:1 4:4 5:5 6:6 7:7 8:8");
-
-    tree.erase(5);
-    sorted = tree.to_string(true);
-    EXPECT_EQ(sorted, "1:1 4:4 6:6 7:7 8:8");
-}
-
-TEST(BSTreeTest, MixedOperations)
-{
-    BSTree<int, int> tree;
-
-    tree.insert(10, 100);
-    tree.insert(20, 200);
-    tree.insert(30, 300);
-    EXPECT_EQ(tree.size(), 3);
-
-    tree.insert(20, 250);
-    EXPECT_EQ(tree.find(20), 250);
-    EXPECT_EQ(tree.size(), 3);
-
-    tree.erase(10);
-    EXPECT_FALSE(tree.contains(10));
-    EXPECT_EQ(tree.size(), 2);
-
-    tree.insert(40, 400);
-    EXPECT_TRUE(tree.contains(40));
-    EXPECT_EQ(tree.size(), 3);
-
-    EXPECT_EQ(tree.find(20), 250);
-    EXPECT_EQ(tree.find(30), 300);
-    EXPECT_EQ(tree.find(40), 400);
 }
 

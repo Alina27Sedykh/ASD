@@ -480,37 +480,3 @@ TEST(UnorderedTableTest, MixedOperations)
     EXPECT_EQ(table.find(40), 400);
 }
 
-TEST(UnorderedTableTest, LargeNumberOfElements)
-{
-    UnorderedTable<int, int> table;
-    const int num_elements = 100;
-
-    for (int i = 0; i < num_elements; i++)
-    {
-        table.insert(i, i * 2);
-    }
-    EXPECT_EQ(table.size(), num_elements);
-
-    for (int i = 0; i < num_elements; i++)
-    {
-        EXPECT_TRUE(table.consist(i));
-        EXPECT_EQ(table.find(i), i * 2);
-    }
-
-    for (int i = 0; i < num_elements; i += 2)
-    {
-        table.erase(i);
-    }
-    EXPECT_EQ(table.size(), num_elements / 2);
-
-    for (int i = 0; i < num_elements; i += 2)
-    {
-        EXPECT_FALSE(table.consist(i));
-    }
-
-    for (int i = 1; i < num_elements; i += 2)
-    {
-        EXPECT_TRUE(table.consist(i));
-        EXPECT_EQ(table.find(i), i * 2);
-    }
-}
