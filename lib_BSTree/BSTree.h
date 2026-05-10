@@ -11,7 +11,7 @@ template<typename TKey, typename TValue>
 class BSTree : public Tree<TKey, TValue>
 {
 private:
-    // Вспомогательные методы для BST
+    
     Node<TKey, TValue>* find_min(Node<TKey, TValue>* node);
     Node<TKey, TValue>* find_max(Node<TKey, TValue>* node);
     Node<TKey, TValue>* erase_recursive(Node<TKey, TValue>* node, const TKey& key);
@@ -22,19 +22,17 @@ private:
 
 public:
     BSTree() : Tree<TKey, TValue>() {}
-    ~BSTree() = default;  // Деструктор родителя вызывается автоматически
+    ~BSTree() = default;  
 
-    // Переопределяем методы родителя для BST-логики
+    
     void insert(const TKey& key, const TValue& value);
-    TValue& find(const TKey& key);
+    TValue& find(const TKey& key) const ;
     void erase(const TKey& key);
     bool contains(const TKey& key) const noexcept;
 
-    // Новые методы специфичные для BST
+    
     std::string to_string(bool sorted = false) const noexcept;
 };
-
-// Реализация методов BSTree
 
 template<typename TKey, typename TValue>
 Node<TKey, TValue>* BSTree<TKey, TValue>::find_node_bst(const TKey& key) const
@@ -91,7 +89,7 @@ Node<TKey, TValue>* BSTree<TKey, TValue>::insert_recursive(Node<TKey, TValue>* n
     }
     else
     {
-        // Ключ существует - обновляем значение
+        
         node->value.second = value;
     }
     return node;
@@ -113,7 +111,6 @@ Node<TKey, TValue>* BSTree<TKey, TValue>::erase_recursive(Node<TKey, TValue>* no
     }
     else
     {
-        // Нашли узел для удаления
         if (node->left == nullptr && node->right == nullptr)
         {
             delete node;
@@ -136,7 +133,7 @@ Node<TKey, TValue>* BSTree<TKey, TValue>::erase_recursive(Node<TKey, TValue>* no
         }
         else
         {
-            // Узел с двумя детьми - находим максимальный в левом поддереве
+            
             Node<TKey, TValue>* max_left = find_max(node->left);
             node->value = max_left->value;
             node->left = erase_recursive(node->left, max_left->value.first);
@@ -152,7 +149,7 @@ void BSTree<TKey, TValue>::insert(const TKey& key, const TValue& value)
 }
 
 template<typename TKey, typename TValue>
-TValue& BSTree<TKey, TValue>::find(const TKey& key)
+TValue& BSTree<TKey, TValue>::find(const TKey& key) const 
 {
     Node<TKey, TValue>* node = find_node_bst(key);
     if (node == nullptr)
@@ -225,8 +222,6 @@ std::string BSTree<TKey, TValue>::to_string(bool sorted) const noexcept
     {
         if (i > 0) result += " ";
         if (!sorted) result += "(";
-
-        // Преобразуем через stringstream (работает с ЛЮБЫМИ типами, у которых есть operator<<)
         std::stringstream ss;
         ss << elements[i].first << ":" << elements[i].second;
         result += ss.str();

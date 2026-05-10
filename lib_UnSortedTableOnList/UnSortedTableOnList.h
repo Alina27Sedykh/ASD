@@ -32,8 +32,8 @@ public:
     }
     TValue find(const TKey& Key) const override
     {
-        auto it = const_cast<List<std::pair<TKey, TValue>>&>(_list).begin();
-        while (it != const_cast<List<std::pair<TKey, TValue>>&>(_list).end())
+        auto it = _list.begin();
+        while (it != _list.end())
         {
             if ((*it).first == Key)
                 return (*it).second;

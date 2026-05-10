@@ -20,7 +20,7 @@ public:
 
     TValue find(const TKey& Key) const override
     {
-        return const_cast<BSTree<TKey, TValue>&>(_tree).find(Key);
+        return _tree.find(Key);
     }
 
     void erase(const TKey& Key) override

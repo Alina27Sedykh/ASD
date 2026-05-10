@@ -33,6 +33,9 @@ add_subdirectory(lib_Tree)
 add_subdirectory(lib_UnSortedOnTree)
 add_subdirectory(lib_BSTree)
 add_subdirectory(lib_SortedOnBSTree)
+add_subdirectory(lib_HashTable)
+add_subdirectory(lib_heap)
+add_subdirectory(lib_PriorityQueue)
 add_subdirectory(main)                # подключаем дополнительный CMakeLists.txt из подкаталога с именем main
 
 option(BTEST "build test?" ON)        # указываем подключаем ли google-тесты (ON или YES) или нет (OFF или NO)

@@ -102,6 +102,8 @@ public:
     };
     Iterator begin() { return Iterator(_head); }
     Iterator end() { return Iterator(nullptr); }
+    Iterator begin()const  { return Iterator(_head); }
+    Iterator end() const  { return Iterator(nullptr); }
 };
 
 template <class T>

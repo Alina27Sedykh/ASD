@@ -20,7 +20,7 @@ public:
 
     TValue find(const TKey& Key) const override
     {
-        return const_cast<Tree<TKey, TValue>&>(_tree).find(Key);
+        return _tree.find(Key);
     }
 
     void erase(const TKey& Key) override
@@ -55,7 +55,7 @@ public:
 
     bool consist(const TKey& Key) const noexcept override
     {
-        return const_cast<Tree<TKey, TValue>&>(_tree).contains(Key);
+        return _tree.contains(Key);
     }
 
     size_t size() const noexcept override

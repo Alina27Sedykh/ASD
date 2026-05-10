@@ -24,7 +24,7 @@ protected:
     int _size;
 
     void clear_recursive(Node<TKey, TValue>* node);
-    Node<TKey, TValue>* find_node(const TKey& key);
+    Node<TKey, TValue>* find_node(const TKey& key) const;
     void find_last_node(Node<TKey, TValue>*& last_node, Node<TKey, TValue>*& parent_of_last);
 
     void preorder_recursive(Node<TKey, TValue>* node, std::vector<std::pair<TKey, TValue>>& result) const;
@@ -38,7 +38,7 @@ public:
     }
 
     void insert(const TKey& key, const TValue& value);
-    TValue& find(const TKey& key);
+    TValue& find(const TKey& key) const;
     void erase(const TKey& key);
     bool is_empty() const 
     {
@@ -49,7 +49,7 @@ public:
         return _size; 
     }
 
-    bool contains(const TKey& key) 
+    bool contains(const TKey& key) const 
     {
         return find_node(key) != nullptr;
     }
@@ -63,11 +63,11 @@ public:
 };
 
 template<typename TKey, typename TValue>
-Node<TKey, TValue>* Tree<TKey, TValue>::find_node(const TKey& key)
+Node<TKey, TValue>* Tree<TKey, TValue>::find_node(const TKey& key) const 
 {
     if (is_empty()) return nullptr;
 
-    Queue<Node<TKey, TValue>*> q(_size + 10);
+    Queue<Node<TKey, TValue>*> q(_size);
     q.push(_root);
 
     while (!q.is_empty())
@@ -97,8 +97,8 @@ void Tree<TKey, TValue>::find_last_node(Node<TKey, TValue>*& last_node, Node<TKe
 {
     if (is_empty()) return;
 
-    Queue<Node<TKey, TValue>*> q(_size + 10);
-    Queue<Node<TKey, TValue>*> parent_q(_size + 10);
+    Queue<Node<TKey, TValue>*> q(_size );
+    Queue<Node<TKey, TValue>*> parent_q(_size );
 
     q.push(_root);
     parent_q.push(nullptr);
@@ -149,7 +149,7 @@ void Tree<TKey, TValue>::insert(const TKey& key, const TValue& value)
         return;
     }
 
-    Queue<Node<TKey, TValue>*> q(_size + 10);
+    Queue<Node<TKey, TValue>*> q(_size);
     q.push(_root);
 
     while (!q.is_empty())
@@ -182,7 +182,7 @@ void Tree<TKey, TValue>::insert(const TKey& key, const TValue& value)
 }
 
 template<typename TKey, typename TValue>
-TValue& Tree<TKey, TValue>::find(const TKey& key)
+TValue& Tree<TKey, TValue>::find(const TKey& key) const 
 {
     Node<TKey, TValue>* node = find_node(key);
     if (node == nullptr)
@@ -208,31 +208,14 @@ void Tree<TKey, TValue>::erase(const TKey& key)
     Node<TKey, TValue>* last_node = nullptr;
     Node<TKey, TValue>* parent_of_last = nullptr;
     find_last_node(last_node, parent_of_last);
-
-    if (to_delete == last_node)
+    if (!parent_of_last && to_delete == last_node) 
     {
-        if (parent_of_last)
-        {
-            if (parent_of_last->left == to_delete)
-            {
-                parent_of_last->left = nullptr;
-            }
-            else
-            {
-                parent_of_last->right = nullptr;
-            }
-        }
-        else
-        {
-            _root = nullptr;
-        }
-        delete to_delete;
-        _size--;
-        return;
+        _root = nullptr;
     }
-
-    to_delete->value = last_node->value;
-
+    if (to_delete != last_node) 
+    {
+        to_delete->value = last_node->value;
+    }
     if (parent_of_last)
     {
         if (parent_of_last->left == last_node)
